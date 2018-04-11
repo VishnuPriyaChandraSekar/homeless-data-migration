@@ -7,11 +7,11 @@ import java.sql.Types;
 import java.util.ArrayList;
 
 import CsvToDatabase.CSVUtils.ReadFromCSV;
+import CsvToDatabase.DBUpdates.Utilities.DBUtils;
 import CsvToDatabase.DataModels.Location;
 import CsvToDatabase.DataModels.Organization;
 import CsvToDatabase.DataModels.Program;
 import CsvToDatabase.DataModels.Service;
-import CsvToDatabase.DBUpdates.Utilities.DBUtils;
 
 public class Update
 {
@@ -40,15 +40,7 @@ public class Update
 					setStringOrNull(statement, 6, o.url);
 					setStringOrNull(statement, 7, o.tax_status);
 					setStringOrNull(statement, 8, o.tax_id);
-					if (o.year_incorporated == 0)
-					{
-						statement.setNull(9, Types.INTEGER);
-					}
-					else
-					{
-
-						statement.setInt(9, o.year_incorporated);
-					}
+					setIntOrNull(statement, 9, o.year_incorporated);
 					setStringOrNull(statement, 10, o.legal_status);
 					statement.addBatch();
 				}
@@ -68,6 +60,21 @@ public class Update
 		}
 		long endTime = System.currentTimeMillis();
 		System.out.println(endTime - startTime);
+	}
+
+	private static void setIntOrNull(PreparedStatement statement,
+									 int i,
+									 String stringInteger)
+			throws SQLException
+	{
+		if (stringInteger.isEmpty())
+		{
+			statement.setNull(i, Types.INTEGER);
+		}
+		else
+		{
+			statement.setInt(i, Integer.parseInt(stringInteger));
+		}
 	}
 
 	private static void setStringOrNull(PreparedStatement statement,

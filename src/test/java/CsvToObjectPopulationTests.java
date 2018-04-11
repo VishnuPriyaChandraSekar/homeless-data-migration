@@ -2,10 +2,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import CsvToDatabase.CSVUtils.ReadFromCSV;
-import CsvToDatabase.DataModels.Location;
-import CsvToDatabase.DataModels.Organization;
-import CsvToDatabase.DataModels.Program;
-import CsvToDatabase.DataModels.Service;
+import CsvToDatabase.DataModels.*;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -42,6 +39,15 @@ class CsvToObjectPopulationTests
 		ReadFromCSV.readIntoServices(services);
 		var lengthOfUUID = 36;
 		assertEquals(lengthOfUUID, services.get(1).id.length());
+	}
+
+	@Test
+	void testForAbilityToPopulateServiceAtLocation()
+	{
+		List<ServiceAtLocation> serviceAtLocations = new ArrayList<>();
+		ReadFromCSV.readIntoServiceAtLocation(serviceAtLocations);
+		var lengthOfUUID = 36;
+		assertEquals(lengthOfUUID, serviceAtLocations.get(1).id.length());
 	}
 
 }

@@ -5,10 +5,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 
-import CsvToDatabase.DataModels.Location;
-import CsvToDatabase.DataModels.Organization;
-import CsvToDatabase.DataModels.Program;
-import CsvToDatabase.DataModels.Service;
+import CsvToDatabase.DataModels.*;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 
@@ -26,26 +23,16 @@ public class ReadFromCSV
 			for (CSVRecord record : records)
 			{
 				organization.add(i, new Organization());
-				organization.get(i).id = record.get(0);
-				organization.get(i).name = record.get(1);
-				organization.get(i).alternate_name = record.get(2);
-				if (record.get(3)
-						  .equals(""))
-				{
-					organization.get(i).description = "Sample Description Must Be Filled!";
-				}
-				else
-				{
-					organization.get(i).description = record.get(3);
-
-				}
-				organization.get(i).email = record.get(4);
-				organization.get(i).url = record.get(5);
-				organization.get(i).tax_status = record.get(6);
-				organization.get(i).tax_id = record.get(7);
-				organization.get(i).year_incorporated = record.get(8)
-															  .equals("") ? 0 : Integer.parseInt(record.get(8));
-				organization.get(i).legal_status = record.get(9);
+				organization.get(i).id = record.get("id");
+				organization.get(i).name = record.get("name");
+				organization.get(i).alternate_name = record.get("alternate_name");
+				organization.get(i).description = record.get("description");
+				organization.get(i).email = record.get("email");
+				organization.get(i).url = record.get("url");
+				organization.get(i).tax_status = record.get("tax_status");
+				organization.get(i).tax_id = record.get("tax_id");
+				organization.get(i).year_incorporated = record.get("year_incorporated");
+				organization.get(i).legal_status = record.get("legal_status");
 				i++;
 			}
 		}
@@ -139,6 +126,30 @@ public class ReadFromCSV
 				programs.get(i).alternate_name = record.get("alternate_name");
 				programs.get(i).description = record.get("description");
 				programs.get(i).url = record.get("url");
+				i++;
+			}
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+		}
+	}
+
+	public static void readIntoServiceAtLocation(List<ServiceAtLocation> serviceAtLocations)
+	{
+		try
+		{
+			var records = CSVFormat.EXCEL
+								  .withFirstRecordAsHeader()
+								  .parse(Files.newBufferedReader(
+										  Paths.get("/Users/adityas/Downloads/ServiceAtLocation.csv")));
+			var i = 0;
+			for (CSVRecord record : records)
+			{
+				serviceAtLocations.add(i, new ServiceAtLocation());
+				serviceAtLocations.get(i).id = record.get("﻿id");
+				serviceAtLocations.get(i).location_id = record.get("location_id");
+				serviceAtLocations.get(i).service_id = record.get("service_id");
 				i++;
 			}
 		}

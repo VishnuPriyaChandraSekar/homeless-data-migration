@@ -10,7 +10,7 @@ public String email;
 public String url;
 public String tax_status;
 public String tax_id;
-public int year_incorporated;
+public String year_incorporated;
 public String legal_status;
 
 	@Override
