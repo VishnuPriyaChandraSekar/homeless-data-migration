@@ -1,0 +1,5 @@
+#IDEA stuff
+target/*
+out/*
+*.iml
+.idea/*
