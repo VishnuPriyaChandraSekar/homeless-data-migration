@@ -1,12 +1,10 @@
 import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Properties;
 
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -22,42 +20,41 @@ class FileAndDatabaseAccessTests
 	@Disabled("Only run this if access to the DB is failing")
 	void testForDatabaseAccessThroughJDBC()
 	{
-
-		getJDBCAccess();
+		databaseConnection = getJDBCAccess();
 		assertNotNull(databaseConnection);
 
 	}
 
-	@BeforeAll
-	private static void getJDBCAccess()
+//	@BeforeAll
+	static Connection getJDBCAccess()
 	{
-		URI dbUri = null;
+		Properties properties = new Properties();
 		try
 		{
-			dbUri = new URI(System.getenv("DATABSE_URL"));
+			properties.load(Files.newInputStream(Paths.get("src/main/resources/Datasource.properties")));
 		}
-		catch (URISyntaxException e)
+		catch (IOException e)
 		{
 			e.printStackTrace();
+			return null;
 		}
-		String username = dbUri.getUserInfo()
-							   .split(":")[0];
-		String password = dbUri.getUserInfo()
-							   .split(":")[1];
-		String dbUrl =
-				"jdbc:postgresql://" + dbUri.getHost() + ':' + dbUri.getPort() + dbUri.getPath() + "?" + username +
-				password;
-
 		var dataSource = new PGSimpleDataSource();
-		dataSource.setUrl(dbUrl);
-
+		dataSource
+				.setServerName(properties.getProperty("serverName"));
+		dataSource.setDatabaseName(properties
+										   .getProperty("databaseName"));
+		dataSource.setPortNumber(Integer.parseInt(properties
+														  .getProperty("portNumber")));
+		dataSource.setUser(properties.getProperty("user"));
+		dataSource.setPassword(properties.getProperty("password"));
 		try
 		{
-			databaseConnection = dataSource.getConnection();
+			return dataSource.getConnection();
 		}
 		catch (SQLException e)
 		{
 			e.printStackTrace();
+			return null;
 		}
 
 	}

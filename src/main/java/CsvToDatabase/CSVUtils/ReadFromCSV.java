@@ -23,7 +23,7 @@ public class ReadFromCSV
 			for (CSVRecord record : records)
 			{
 				organization.add(i, new Organization());
-				organization.get(i).id = record.get("id");
+				organization.get(i).id = record.get(0);
 				organization.get(i).name = record.get("name");
 				organization.get(i).alternate_name = record.get("alternate_name");
 				organization.get(i).description = record.get("description");
@@ -48,7 +48,7 @@ public class ReadFromCSV
 		{
 			var records = CSVFormat.EXCEL
 								  .withFirstRecordAsHeader()
-								  .parse(Files.newBufferedReader(Paths.get("/Users/adityas/Downloads/Services.csv")));
+								  .parse(Files.newBufferedReader(Paths.get("/Users/adityas/Downloads/Service.csv")));
 			var i = 0;
 			for (CSVRecord record : records)
 			{
@@ -142,7 +142,7 @@ public class ReadFromCSV
 			var records = CSVFormat.EXCEL
 								  .withFirstRecordAsHeader()
 								  .parse(Files.newBufferedReader(
-										  Paths.get("/Users/adityas/Downloads/ServiceAtLocation.csv")));
+										  Paths.get("/Users/adityas/Downloads/Service At Location.csv")));
 			var i = 0;
 			for (CSVRecord record : records)
 			{
@@ -150,6 +150,7 @@ public class ReadFromCSV
 				serviceAtLocations.get(i).id = record.get("﻿id");
 				serviceAtLocations.get(i).location_id = record.get("location_id");
 				serviceAtLocations.get(i).service_id = record.get("service_id");
+				serviceAtLocations.get(i).description = record.get("description");
 				i++;
 			}
 		}

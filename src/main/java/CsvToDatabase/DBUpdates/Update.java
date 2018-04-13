@@ -4,31 +4,25 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.Types;
-import java.util.ArrayList;
+import java.util.List;
 
-import CsvToDatabase.CSVUtils.ReadFromCSV;
 import CsvToDatabase.DBUpdates.Utilities.DBUtils;
-import CsvToDatabase.DataModels.Location;
-import CsvToDatabase.DataModels.Organization;
-import CsvToDatabase.DataModels.Program;
-import CsvToDatabase.DataModels.Service;
+import CsvToDatabase.DataModels.*;
 
 public class Update
 {
 
-	public static void updateOrganization()
+	public static void updateOrganization(List<Organization> organizations)
 	{
-		var organization = new ArrayList<Organization>();
-		ReadFromCSV.readIntoOrganization(organization);
+		
 		long startTime = System.currentTimeMillis();
 		try (Connection connection = DBUtils.getConnection())
 		{
-			connection.setAutoCommit(false);
 			connection.createStatement()
-					  .executeUpdate("DELETE FROM organization");
+					  .executeUpdate("TRUNCATE TABLE organization CASCADE");
 			var query = "INSERT INTO " + Organization.class.getSimpleName() + " VALUES (?,?,?,?,?,?,?,?,?,?)";
 			var statement = connection.prepareStatement(query);
-			organization.forEach(o -> {
+			organizations.forEach(o -> {
 				try
 				{
 					setStringOrNull(statement, 1, o.id);
@@ -92,36 +86,34 @@ public class Update
 		}
 	}
 
-	public static void updateServices()
+	public static void updateServices(List<Service> services)
 	{
-		var service = new ArrayList<Service>();
-		ReadFromCSV.readIntoServices(service);
+		
 		long startTime = System.currentTimeMillis();
 		try (Connection connection = DBUtils.getConnection())
 		{
-			connection.setAutoCommit(false);
 			connection.createStatement()
-					  .executeUpdate("DELETE FROM service");
+					  .executeUpdate("TRUNCATE TABLE service CASCADE");
 			var query = "INSERT INTO service VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
 			var statement = connection.prepareStatement(query);
-			service.forEach(services -> {
+			services.forEach(service -> {
 				try
 				{
-					setStringOrNull(statement, 1, services.id);
-					setStringOrNull(statement, 2, services.organization_id);
-					setStringOrNull(statement, 3, services.program_id);
-					setStringOrNull(statement, 4, services.name);
-					setStringOrNull(statement, 5, services.alternate_name);
-					setStringOrNull(statement, 6, services.description);
-					setStringOrNull(statement, 7, services.url);
-					setStringOrNull(statement, 8, services.email);
-					setStringOrNull(statement, 9, services.status);
-					setStringOrNull(statement, 10, services.interpretation_services);
-					setStringOrNull(statement, 11, services.application_process);
-					setStringOrNull(statement, 12, services.wait_time);
-					setStringOrNull(statement, 13, services.fees);
-					setStringOrNull(statement, 14, services.accreditation);
-					setStringOrNull(statement, 15, services.licenses);
+					setStringOrNull(statement, 1, service.id);
+					setStringOrNull(statement, 2, service.organization_id);
+					setStringOrNull(statement, 3, service.program_id);
+					setStringOrNull(statement, 4, service.name);
+					setStringOrNull(statement, 5, service.alternate_name);
+					setStringOrNull(statement, 6, service.description);
+					setStringOrNull(statement, 7, service.url);
+					setStringOrNull(statement, 8, service.email);
+					setStringOrNull(statement, 9, service.status);
+					setStringOrNull(statement, 10, service.interpretation_services);
+					setStringOrNull(statement, 11, service.application_process);
+					setStringOrNull(statement, 12, service.wait_time);
+					setStringOrNull(statement, 13, service.fees);
+					setStringOrNull(statement, 14, service.accreditation);
+					setStringOrNull(statement, 15, service.licenses);
 					statement.addBatch();
 				}
 				catch (SQLException e)
@@ -142,16 +134,14 @@ public class Update
 		System.out.println(endTime - startTime);
 	}
 
-	public static void updateProgram()
+	public static void updateProgram(List<Program> programs)
 	{
-		var programs = new ArrayList<Program>();
-		ReadFromCSV.readIntoPrograms(programs);
+		
 		long startTime = System.currentTimeMillis();
 		try (Connection connection = DBUtils.getConnection())
 		{
-			connection.setAutoCommit(false);
 			connection.createStatement()
-					  .executeUpdate("DELETE FROM program");
+					  .executeUpdate("TRUNCATE TABLE program CASCADE");
 			var query = "INSERT INTO program VALUES (?,?,?,?,?,?)";
 			var statement = connection.prepareStatement(query);
 			programs.forEach(program -> {
@@ -183,16 +173,14 @@ public class Update
 		System.out.println(endTime - startTime);
 	}
 
-	public static void updateLocation()
+	public static void updateLocation(List<Location> locations)
 	{
-		var locations = new ArrayList<Location>();
-		ReadFromCSV.readIntoLocation(locations);
+		
 		long startTime = System.currentTimeMillis();
 		try (Connection connection = DBUtils.getConnection())
 		{
-			connection.setAutoCommit(false);
 			connection.createStatement()
-					  .executeUpdate("DELETE FROM location");
+					  .executeUpdate("TRUNCATE TABLE location CASCADE");
 			var query = "INSERT INTO location VALUES (?,?,?,?,?,?,?,?)";
 			var statement = connection.prepareStatement(query);
 			locations.forEach(location -> {
@@ -206,6 +194,42 @@ public class Update
 					setStringOrNull(statement, 6, location.transportation);
 					statement.setDouble(7, location.latitude);
 					statement.setDouble(8, location.longitude);
+					statement.addBatch();
+				}
+				catch (SQLException e)
+				{
+					e.printStackTrace();
+				}
+
+			});
+			statement.executeBatch();
+			connection.commit();
+
+		}
+		catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		long endTime = System.currentTimeMillis();
+		System.out.println(endTime - startTime);
+	}
+
+	public static void updateServiceAtLocation(List<ServiceAtLocation> serviceAtLocations)
+	{
+		long startTime = System.currentTimeMillis();
+		try (Connection connection = DBUtils.getConnection())
+		{
+			connection.createStatement()
+					  .executeUpdate("TRUNCATE TABLE service_at_location CASCADE");
+			var query = "INSERT INTO service_at_location VALUES (?,?,?,?)";
+			var statement = connection.prepareStatement(query);
+			serviceAtLocations.forEach(serviceAtLocation -> {
+				try
+				{
+					setStringOrNull(statement, 1, serviceAtLocation.id);
+					setStringOrNull(statement, 2, serviceAtLocation.service_id);
+					setStringOrNull(statement, 3, serviceAtLocation.location_id);
+					setStringOrNull(statement, 4, serviceAtLocation.description);
 					statement.addBatch();
 				}
 				catch (SQLException e)

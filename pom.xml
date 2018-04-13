@@ -34,6 +34,12 @@
             <artifactId>postgresql</artifactId>
             <version>42.2.2</version>
         </dependency>
+        <!--Hikari CP-->
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+            <version>3.1.0</version>
+        </dependency>
         <!--Apache CSV-->
         <dependency>
             <groupId>org.apache.commons</groupId>

@@ -3,22 +3,19 @@ package CsvToDatabase.DBUpdates.Utilities;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import org.postgresql.ds.PGSimpleDataSource;
+import com.zaxxer.hikari.HikariConfig;
+import com.zaxxer.hikari.HikariDataSource;
 
 public class DBUtils
 {
 
-	
-
 	public static Connection getConnection()
 			throws SQLException
 	{
-		var pgDataSource = new PGSimpleDataSource();
-		pgDataSource.setDatabaseName("CodeForDC_Homeless");
-		pgDataSource.setPortNumber(5432);
-		pgDataSource.setPassword("");
-		pgDataSource.setUser("postgres");
-		return pgDataSource.getConnection();
+		HikariConfig config = new HikariConfig("src/main/resources/Datasource.properties");
+		config.setAutoCommit(false);
+		HikariDataSource ds = new HikariDataSource(config);
+		return ds.getConnection();
 	}
 
 	
