@@ -1,15 +1,11 @@
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+import CsvToDatabase.DBUpdates.Update;
+import CsvToDatabase.DBUpdates.Utilities.DBUtils;
 import CsvToDatabase.DataModels.ServiceAtLocation;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import org.postgresql.copy.CopyManager;
-import org.postgresql.core.BaseConnection;
 
 class DatabasePopulationTests
 {
@@ -19,26 +15,23 @@ class DatabasePopulationTests
 	@BeforeAll
 	static void setupJdbc()
 	{
-	databaseConnection = FileAndDatabaseAccessTests.getJDBCAccess();
+		databaseConnection = DBUtils.getConnection();
 	}
 
 	@Test
-	void testForAbilityToPopulateTestDataToServiceAtLocationTable()
-			throws SQLException, IOException
+	void testAbilityToPopulateDataToServiceAtLocationTable()
+			throws SQLException
 	{
-
-		long startTime = System.currentTimeMillis();
-		CopyManager copyManager = new CopyManager((BaseConnection) databaseConnection);
-		var sqlQuery = "COPY service_at_location FROM stdin WITH CSV HEADER";
-		long rowsAffected = copyManager.copyIn(sqlQuery, Files.newBufferedReader(Paths.get("/Users/adityas/Downloads/Service At Location.csv")));
-		long endTime = System.currentTimeMillis();
-		System.out.println(endTime - startTime);
-		System.out.println(rowsAffected);
-		
+//		ClearOutData.clearOutServiceAtLocation();
+		Update.updateServiceAtLocation();
+//		var resultSet = databaseConnection.createStatement().executeQuery("SELECT id from service_at_location");
+//		resultSet.next();
+//		assertEquals(36, resultSet.getString(1)
+//								  .length(), "ID Must be a 36 character GUID");
 	}
 
 	@Test
-	void testForAbilityToDeleteTestDataToServiceAtLocationTable()
+	void testAbilityToDeleteTestDataToServiceAtLocationTable()
 			throws SQLException
 	{
 		var serviceAtLocation = new ServiceAtLocation();
@@ -51,7 +44,7 @@ class DatabasePopulationTests
 
 	}
 
-	@AfterAll
+	//	@AfterAll
 	static void closeJDbc()
 			throws SQLException
 	{

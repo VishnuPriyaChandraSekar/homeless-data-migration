@@ -1,11 +1,11 @@
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import CsvToDatabase.DBUpdates.ClearOutData;
+import CsvToDatabase.DBUpdates.Utilities.DBUtils;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 
 class DatabaseTruncationTests
 {
@@ -14,18 +14,17 @@ class DatabaseTruncationTests
 	@BeforeAll
 	static void setupJdbc()
 	{
-		databaseConnection = FileAndDatabaseAccessTests.getJDBCAccess();
+		databaseConnection = DBUtils.getConnection();
 	}
 
 	@Test
 	void truncateDataFromServiceAtLocation()
 			throws SQLException
 	{
-		databaseConnection.createStatement()
-				  .executeUpdate("TRUNCATE TABLE service_at_location CASCADE");
-		var statement = databaseConnection.prepareStatement("SELECT * FROM service_at_location");
-		ResultSet resultSet = statement.executeQuery();
-		assertFalse(resultSet.next());
+//		databaseConnection.createStatement()
+//				  .executeUpdate("TRUNCATE TABLE service_at_location CASCADE");
+		ClearOutData.clearOutServiceAtLocation();
+		databaseConnection.createStatement().executeQuery("SELECT * FROM service_at_location");
 	}
 	@AfterAll
 	static void closeJDbc()

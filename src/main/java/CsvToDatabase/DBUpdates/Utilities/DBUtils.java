@@ -10,12 +10,20 @@ public class DBUtils
 {
 
 	public static Connection getConnection()
-			throws SQLException
+			
 	{
 		HikariConfig config = new HikariConfig("src/main/resources/Datasource.properties");
 		config.setAutoCommit(false);
 		HikariDataSource ds = new HikariDataSource(config);
-		return ds.getConnection();
+		try
+		{
+			return ds.getConnection();
+		}
+		catch (SQLException e)
+		{
+			e.printStackTrace();
+			throw new RuntimeException();
+		}
 	}
 
 	
