@@ -6,6 +6,7 @@ import CsvToDatabase.DBUpdates.Utilities.DBUtils;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 class DatabaseTruncationTests
 {
@@ -21,10 +22,11 @@ class DatabaseTruncationTests
 	void truncateDataFromServiceAtLocation()
 			throws SQLException
 	{
-//		databaseConnection.createStatement()
-//				  .executeUpdate("TRUNCATE TABLE service_at_location CASCADE");
 		ClearOutData.clearOutServiceAtLocation();
-		databaseConnection.createStatement().executeQuery("SELECT * FROM service_at_location");
+		var resultSet = databaseConnection.createStatement()
+						  .executeQuery("SELECT id FROM service_at_location");
+		assertFalse(resultSet.next(),"There should be no next row in the ResultSet.");
+		
 	}
 	@AfterAll
 	static void closeJDbc()

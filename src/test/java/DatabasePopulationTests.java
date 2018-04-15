@@ -4,8 +4,10 @@ import java.sql.SQLException;
 import CsvToDatabase.DBUpdates.Update;
 import CsvToDatabase.DBUpdates.Utilities.DBUtils;
 import CsvToDatabase.DataModels.ServiceAtLocation;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class DatabasePopulationTests
 {
@@ -22,12 +24,8 @@ class DatabasePopulationTests
 	void testAbilityToPopulateDataToServiceAtLocationTable()
 			throws SQLException
 	{
-//		ClearOutData.clearOutServiceAtLocation();
-		Update.updateServiceAtLocation();
-//		var resultSet = databaseConnection.createStatement().executeQuery("SELECT id from service_at_location");
-//		resultSet.next();
-//		assertEquals(36, resultSet.getString(1)
-//								  .length(), "ID Must be a 36 character GUID");
+		long numberOfLinesCopied = Update.updateServiceAtLocation();
+		assertTrue(numberOfLinesCopied > 0,"More than one line should be copied");
 	}
 
 	@Test
@@ -44,7 +42,7 @@ class DatabasePopulationTests
 
 	}
 
-	//	@AfterAll
+	@AfterAll
 	static void closeJDbc()
 			throws SQLException
 	{

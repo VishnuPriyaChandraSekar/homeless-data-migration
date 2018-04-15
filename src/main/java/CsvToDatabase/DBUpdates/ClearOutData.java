@@ -53,8 +53,8 @@ public class ClearOutData
 
 		try (Connection connection = DBUtils.getConnection())
 		{
-			var preparedStatement = connection.createStatement().executeQuery("TRUNCATE TABLE "+ tableName +" CASCADE");
-			preparedStatement.close();
+			connection.createStatement()
+					  .executeUpdate("TRUNCATE TABLE " + tableName + " CASCADE");
 			
 		}
 		catch (Exception e)

@@ -12,58 +12,59 @@ import org.postgresql.core.BaseConnection;
 public class Update
 {
 
-	public static void updateOrganization()
+	public static long updateOrganization()
 	{
 
 		var tableAndFilename = "Organization";
-		pgCopyQuery(tableAndFilename);
+		return pgCopyQuery(tableAndFilename);
 	}
-	
-	public static void updateServices()
+
+	public static long updateServices()
 	{
 
 		var tableAndFilename = "Services";
-		pgCopyQuery(tableAndFilename);
+		return pgCopyQuery(tableAndFilename);
 	}
 
-	public static void updateProgram()
+	public static long updateProgram()
 	{
 
 		var tableAndFilename = "Program";
-		pgCopyQuery(tableAndFilename);
+		return pgCopyQuery(tableAndFilename);
 	}
-	
 
-	public static void updateLocation()
+
+	public static long updateLocation()
 	{
 		var tableAndFilename = "Location";
-		pgCopyQuery(tableAndFilename);
+		return pgCopyQuery(tableAndFilename);
 	}
 
-	public static void updateServiceAtLocation()
+	public static long updateServiceAtLocation()
 	{
 		var tableAndFilename = "Service_At_Location";
-		pgCopyQuery(tableAndFilename);
+		return pgCopyQuery(tableAndFilename);
 	}
-	
-	private static void pgCopyQuery(String tableAndFilename)
+
+	private static long pgCopyQuery(String tableAndFilename)
 	{
 		var startTime = System.currentTimeMillis();
 		var sqlQuery = "COPY " + tableAndFilename + " FROM stdin WITH CSV HEADER";
+		var linesCopied = 0L;
 		try (var connection = DBUtils.getConnection())
 		{
 			var baseConnection = connection.unwrap(BaseConnection.class);
 			var copyManager = new CopyManager(baseConnection);
-			copyManager.copyIn(sqlQuery, Files.newBufferedReader(
+			linesCopied = copyManager.copyIn(sqlQuery, Files.newBufferedReader(
 					Paths.get("/Users/adityas/Downloads/",tableAndFilename + ".csv")));
 		}
 		catch (SQLException | IOException e)
 		{
 			e.printStackTrace();
-			throw new RuntimeException("Error copying data");
 		}
 
 		var endTime = System.currentTimeMillis();
 		System.out.println(endTime - startTime);
+		return linesCopied;
 	}
 }

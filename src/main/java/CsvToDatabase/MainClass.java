@@ -13,17 +13,6 @@ public class MainClass
 		//Truncate tables
 //		ClearOutData.clearOutAllTables();
 		
-		//Update tables below
-//		ReadFromCSV.readIntoOrganization(organizations);
-//		Update.updateOrganization(organizations);
-//
-//		ReadFromCSV.readIntoPrograms(programs);
-//		Update.updateProgram(programs);
-//
-//		ReadFromCSV.readIntoServices(services);
-//		Update.updateServices(services);
-//
-//		ReadFromCSV.readIntoLocation(locations);
 		ClearOutData.clearOutLocation();
 		ClearOutData.clearOutServiceAtLocation();
 		Update.updateLocation();
