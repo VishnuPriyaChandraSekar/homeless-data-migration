@@ -16,13 +16,14 @@ public class DatabaseConnection
 
 	public static Connection getConnection(String dataSourceToUse)
 	{
-		if (dataSourceToUse.equalsIgnoreCase("hikari"))
+		switch (dataSourceToUse.toLowerCase())
 		{
-			return getHikariConnection();
-		}
-		else
-		{
-			return getPGConnection();
+			case "hikari":
+				return getHikariConnection();
+			case "postgres":
+				return getPGConnection();
+			default:
+				throw new RuntimeException("Can't find datasource implementation for " + dataSourceToUse);
 		}
 	}
 
