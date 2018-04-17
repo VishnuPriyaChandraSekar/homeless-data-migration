@@ -2,7 +2,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 
-import CsvToDatabase.ConnectionUtilities.DBUtils;
+import CsvToDatabase.ConnectionUtilities.DatabaseConnection;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -16,14 +16,14 @@ class FileAndDatabaseAccessTests
 	@Disabled("Only run this if access to the DB is failing")
 	void testForDatabaseAccessThroughJDBC()
 	{
-		var databaseConnection = DBUtils.getConnection();
+		var databaseConnection =  DatabaseConnection.getConnection("Hikari");
 		assertNotNull(databaseConnection);
 
 	}
 
 	@ParameterizedTest
 	@ValueSource(strings = { "Organization",
-							 "Services",
+							 "Service",
 							 "Program",
 							 "Location" })
 	void testForPresenceOfCsvFiles(String string)

@@ -1,8 +1,8 @@
-package CsvToDatabase.service;
+package CsvToDatabase.ServiceClasses;
 
 import java.sql.Connection;
 
-import CsvToDatabase.ConnectionUtilities.DBUtils;
+import CsvToDatabase.ConnectionUtilities.DatabaseConnection;
 
 public class ClearOutData
 {
@@ -19,31 +19,31 @@ public class ClearOutData
 
 	public static void clearOutOrganization()
 	{
-		var tableName = "organization";
+		var tableName = "Organization";
 		pgTruncateQuery(tableName);
 	}
 
 	public static void clearOutProgram()
 	{
-		var tableName = "program";
+		var tableName = "Program";
 		pgTruncateQuery(tableName);
 	}
 
 	public static void clearOutService()
 	{
-		var tableName = "service";
+		var tableName = "Service";
 		pgTruncateQuery(tableName);
 	}
 
 	public static void clearOutLocation()
 	{
-		var tableName = "location";
+		var tableName = "Location";
 		pgTruncateQuery(tableName);
 	}
 
 	public static void clearOutServiceAtLocation()
 	{
-		var tableName = "service_at_location";
+		var tableName = "Service_at_Location";
 		pgTruncateQuery(tableName);
 	}
 
@@ -51,7 +51,7 @@ public class ClearOutData
 	{
 		long startTime = System.currentTimeMillis();
 
-		try (Connection connection = DBUtils.getConnection())
+		try (Connection connection = DatabaseConnection.getConnection("hikari"))
 		{
 			connection.createStatement()
 					  .executeUpdate("TRUNCATE TABLE " + tableName + " CASCADE");

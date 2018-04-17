@@ -1,14 +1,17 @@
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import CsvToDatabase.service.PopulateDatabase;
-import CsvToDatabase.ConnectionUtilities.DBUtils;
+import CsvToDatabase.ConnectionUtilities.DatabaseConnection;
+import CsvToDatabase.ServiceClasses.PopulateDatabase;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+/**
+ * These tests must be run in the order contained or errors will be thrown.
+ */
 class DatabasePopulationTests
 {
 
@@ -17,7 +20,7 @@ class DatabasePopulationTests
 	@BeforeAll
 	static void setupJdbc()
 	{
-		databaseConnection = DBUtils.getConnection();
+		databaseConnection = DatabaseConnection.getConnection("hikari");
 	}
 
 	@Test

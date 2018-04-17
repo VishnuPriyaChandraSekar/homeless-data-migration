@@ -40,11 +40,5 @@
             <artifactId>HikariCP</artifactId>
             <version>3.1.0</version>
         </dependency>
-        <!--Apache CSV-->
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-csv</artifactId>
-            <version>1.5</version>
-        </dependency>
     </dependencies>
 </project>

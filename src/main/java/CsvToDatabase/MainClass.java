@@ -1,7 +1,7 @@
 package CsvToDatabase;
 
-import CsvToDatabase.service.ClearOutData;
-import CsvToDatabase.service.PopulateDatabase;
+import CsvToDatabase.ServiceClasses.ClearOutData;
+import CsvToDatabase.ServiceClasses.PopulateDatabase;
 
 public class MainClass
 {

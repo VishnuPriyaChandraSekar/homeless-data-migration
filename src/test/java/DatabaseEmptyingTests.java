@@ -1,8 +1,8 @@
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import CsvToDatabase.service.ClearOutData;
-import CsvToDatabase.ConnectionUtilities.DBUtils;
+import CsvToDatabase.ConnectionUtilities.DatabaseConnection;
+import CsvToDatabase.ServiceClasses.ClearOutData;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -15,7 +15,7 @@ class DatabaseEmptyingTests
 	@BeforeAll
 	static void setupJdbc()
 	{
-		databaseConnection = DBUtils.getConnection();
+		databaseConnection = DatabaseConnection.getConnection("hikari");
 	}
 
 	@Test
