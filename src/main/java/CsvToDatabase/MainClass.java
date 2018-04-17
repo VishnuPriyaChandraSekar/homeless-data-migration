@@ -1,7 +1,7 @@
 package CsvToDatabase;
 
-import CsvToDatabase.DBUpdates.ClearOutData;
-import CsvToDatabase.DBUpdates.Update;
+import CsvToDatabase.service.ClearOutData;
+import CsvToDatabase.service.PopulateDatabase;
 
 public class MainClass
 {
@@ -9,11 +9,8 @@ public class MainClass
 	public static void main(String[] args)
 	{
 		
-
-		//Truncate tables
 		ClearOutData.clearOutAllTables();
-		Update.updateAll();
-		
+		PopulateDatabase.updateAll();
 		
 	}
 }

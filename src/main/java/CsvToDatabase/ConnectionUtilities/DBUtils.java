@@ -1,4 +1,4 @@
-package CsvToDatabase.DBUpdates.Utilities;
+package CsvToDatabase.ConnectionUtilities;
 
 import java.sql.Connection;
 import java.sql.SQLException;

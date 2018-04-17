@@ -1,15 +1,15 @@
-package CsvToDatabase.DBUpdates;
+package CsvToDatabase.service;
 
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.SQLException;
 
-import CsvToDatabase.DBUpdates.Utilities.DBUtils;
+import CsvToDatabase.ConnectionUtilities.DBUtils;
 import org.postgresql.copy.CopyManager;
 import org.postgresql.core.BaseConnection;
 
-public class Update
+public class PopulateDatabase
 {
 
 	public static void updateAll()
@@ -56,7 +56,7 @@ public class Update
 		return pgCopyQuery(tableAndFilename);
 	}
 
-	public static long pgCopyQuery(String tableAndFilename)
+	private static long pgCopyQuery(String tableAndFilename)
 	{
 		var startTime = System.currentTimeMillis();
 		var sqlQuery = "COPY " + tableAndFilename.toLowerCase() + "  FROM stdin WITH CSV HEADER";

@@ -1,0 +1,83 @@
+import java.sql.Connection;
+import java.sql.SQLException;
+
+import CsvToDatabase.service.ClearOutData;
+import CsvToDatabase.ConnectionUtilities.DBUtils;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+
+class DatabaseEmptyingTests
+{
+	private static Connection databaseConnection;
+
+	@BeforeAll
+	static void setupJdbc()
+	{
+		databaseConnection = DBUtils.getConnection();
+	}
+
+	@Test
+	void emptyDataFromOrganization()
+			throws SQLException
+	{
+		ClearOutData.clearOutOrganization();
+		var resultSet = databaseConnection.createStatement()
+										  .executeQuery("SELECT id FROM organization");
+		assertFalse(resultSet.next(),"There should be no next row in the ResultSet.");
+
+	}
+
+	@Test
+	void emptyDataFromProgram()
+			throws SQLException
+	{
+		ClearOutData.clearOutProgram();
+		var resultSet = databaseConnection.createStatement()
+										  .executeQuery("SELECT id FROM program");
+		assertFalse(resultSet.next(),"There should be no next row in the ResultSet.");
+
+	}
+
+	@Test
+	void emptyDataFromLocation()
+			throws SQLException
+	{
+		ClearOutData.clearOutLocation();
+		var resultSet = databaseConnection.createStatement()
+										  .executeQuery("SELECT id FROM location");
+		assertFalse(resultSet.next(),"There should be no next row in the ResultSet.");
+
+	}
+
+	@Test
+	void emptyDataFromService()
+			throws SQLException
+	{
+		ClearOutData.clearOutService();
+		var resultSet = databaseConnection.createStatement()
+										  .executeQuery("SELECT id FROM service");
+		assertFalse(resultSet.next(),"There should be no next row in the ResultSet.");
+
+	}
+
+	@Test
+	void emptyDataFromServiceAtLocation()
+			throws SQLException
+	{
+		ClearOutData.clearOutServiceAtLocation();
+		var resultSet = databaseConnection.createStatement()
+										  .executeQuery("SELECT id FROM service_at_location");
+		assertFalse(resultSet.next(),"There should be no next row in the ResultSet.");
+
+	}
+	
+	@AfterAll
+	static void closeJDbc()
+			throws SQLException
+	{
+		databaseConnection.close();
+	}
+
+}

@@ -1,8 +1,8 @@
-package CsvToDatabase.DBUpdates;
+package CsvToDatabase.service;
 
 import java.sql.Connection;
 
-import CsvToDatabase.DBUpdates.Utilities.DBUtils;
+import CsvToDatabase.ConnectionUtilities.DBUtils;
 
 public class ClearOutData
 {
@@ -11,10 +11,10 @@ public class ClearOutData
 	{
 
 		clearOutOrganization();
-//		clearOutProgram();
-//		clearOutLocation();
-//		clearOutService();
-//		clearOutServiceAtLocation();
+		clearOutProgram();
+		clearOutLocation();
+		clearOutService();
+		clearOutServiceAtLocation();
 	}
 
 	public static void clearOutOrganization()
