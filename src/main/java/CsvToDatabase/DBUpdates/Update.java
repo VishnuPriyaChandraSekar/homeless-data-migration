@@ -12,6 +12,16 @@ import org.postgresql.core.BaseConnection;
 public class Update
 {
 
+	public static void updateAll()
+	{
+
+		updateOrganization();
+		updateProgram();
+		updateServices();
+		updateLocation();
+		updateServiceAtLocation();
+	}
+
 	public static long updateOrganization()
 	{
 
@@ -22,7 +32,7 @@ public class Update
 	public static long updateServices()
 	{
 
-		var tableAndFilename = "Services";
+		var tableAndFilename = "Service";
 		return pgCopyQuery(tableAndFilename);
 	}
 
@@ -46,17 +56,17 @@ public class Update
 		return pgCopyQuery(tableAndFilename);
 	}
 
-	private static long pgCopyQuery(String tableAndFilename)
+	public static long pgCopyQuery(String tableAndFilename)
 	{
 		var startTime = System.currentTimeMillis();
-		var sqlQuery = "COPY " + tableAndFilename + " FROM stdin WITH CSV HEADER";
+		var sqlQuery = "COPY " + tableAndFilename.toLowerCase() + "  FROM stdin WITH CSV HEADER";
 		var linesCopied = 0L;
 		try (var connection = DBUtils.getConnection())
 		{
 			var baseConnection = connection.unwrap(BaseConnection.class);
 			var copyManager = new CopyManager(baseConnection);
 			linesCopied = copyManager.copyIn(sqlQuery, Files.newBufferedReader(
-					Paths.get("/Users/adityas/Downloads/",tableAndFilename + ".csv")));
+					Paths.get("/Users/adityas/Downloads/", tableAndFilename + ".csv")));
 		}
 		catch (SQLException | IOException e)
 		{

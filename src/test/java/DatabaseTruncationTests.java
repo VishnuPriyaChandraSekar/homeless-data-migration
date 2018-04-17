@@ -28,6 +28,18 @@ class DatabaseTruncationTests
 		assertFalse(resultSet.next(),"There should be no next row in the ResultSet.");
 		
 	}
+
+	@Test
+	void truncateDataFromOrganization()
+			throws SQLException
+	{
+		ClearOutData.clearOutOrganization();
+		var resultSet = databaseConnection.createStatement()
+										  .executeQuery("SELECT id FROM organization");
+		assertFalse(resultSet.next(),"There should be no next row in the ResultSet.");
+
+	}
+	
 	@AfterAll
 	static void closeJDbc()
 			throws SQLException

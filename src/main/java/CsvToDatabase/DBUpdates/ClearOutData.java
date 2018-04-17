@@ -11,10 +11,10 @@ public class ClearOutData
 	{
 
 		clearOutOrganization();
-		clearOutProgram();
-		clearOutLocation();
-		clearOutService();
-		clearOutServiceAtLocation();
+//		clearOutProgram();
+//		clearOutLocation();
+//		clearOutService();
+//		clearOutServiceAtLocation();
 	}
 
 	public static void clearOutOrganization()

@@ -13,7 +13,7 @@ public class DBUtils
 			
 	{
 		HikariConfig config = new HikariConfig("src/main/resources/Datasource.properties");
-		config.setAutoCommit(false);
+		config.setAutoCommit(true);
 		HikariDataSource ds = new HikariDataSource(config);
 		try
 		{
