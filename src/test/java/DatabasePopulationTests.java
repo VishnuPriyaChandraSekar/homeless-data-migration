@@ -86,6 +86,19 @@ class DatabasePopulationTests
 		assertTrue(numberOfLinesCopied > 0, "More than one line should be copied");
 		assertEquals(numberOfLinesCopied, resultSet.getInt(1),"Copied data should be present in the database");
 	}
+
+	@Test
+	void testAbilityToPopulateDataToPhysicalAddressTable()
+			throws SQLException
+	{
+		long numberOfLinesCopied = PopulateDatabase.updatePhysicalAddress();
+		var resultSet = databaseConnection.createStatement()
+										  .executeQuery("SELECT COUNT(id) FROM physical_address");
+		resultSet.next();
+		resultSet.getInt(1);
+		assertTrue(numberOfLinesCopied > 0, "More than one line should be copied");
+		assertEquals(numberOfLinesCopied, resultSet.getInt(1),"Copied data should be present in the database");
+	}
 	
 
 	@AfterAll

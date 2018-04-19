@@ -12,9 +12,11 @@ import org.postgresql.core.BaseConnection;
 public class PopulateDatabase
 {
 
-	public static void updateAll()
-	{
+	private static String dataSource;
 
+	public static void updateAll(String dataSourceInput)
+	{
+		dataSource = dataSourceInput;
 		updateOrganization();
 		updateProgram();
 		updateServices();
@@ -56,12 +58,18 @@ public class PopulateDatabase
 		return pgCopyQuery(tableAndFilename);
 	}
 
+	public static long updatePhysicalAddress()
+	{
+		var tableAndFilename = "physical_address";
+		return pgCopyQuery(tableAndFilename);
+	}
+
 	private static long pgCopyQuery(String tableAndFilename)
 	{
 		var startTime = System.currentTimeMillis();
 		var sqlQuery = "COPY " + tableAndFilename.toLowerCase() + "  FROM stdin WITH CSV HEADER";
 		var linesCopied = 0L;
-		try (var connection = DatabaseConnection.getConnection("hikari"))
+		try (var connection = DatabaseConnection.getConnection(dataSource))
 		{
 			var baseConnection = connection.unwrap(BaseConnection.class);
 			var copyManager = new CopyManager(baseConnection);

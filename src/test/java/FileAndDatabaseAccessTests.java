@@ -18,7 +18,7 @@ class FileAndDatabaseAccessTests
 	@Disabled("Only run this if access to the DB is failing")
 	void testHikariDatabaseAccessThroughJDBC()
 	{
-		var databaseConnection =  DatabaseConnection.getConnection("Hikari");
+		var databaseConnection =  DatabaseConnection.getConnection("hikari");
 		assertNotNull(databaseConnection);
 	}
 
