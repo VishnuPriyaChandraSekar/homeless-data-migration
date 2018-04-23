@@ -7,6 +7,8 @@ import CsvToDatabase.ConnectionUtilities.DatabaseConnection;
 public class ClearOutData
 {
 
+	private static String dataSourceToUse;
+
 	public static void clearOutAllTables()
 	{
 
@@ -51,7 +53,7 @@ public class ClearOutData
 	{
 		long startTime = System.currentTimeMillis();
 
-		try (Connection connection = DatabaseConnection.getConnection("hikari"))
+		try (Connection connection = DatabaseConnection.getConnection())
 		{
 			connection.createStatement()
 					  .executeUpdate("TRUNCATE TABLE " + tableName + " CASCADE");

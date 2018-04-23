@@ -20,7 +20,7 @@ class DatabasePopulationTests
 	@BeforeAll
 	static void setupJdbc()
 	{
-		databaseConnection = DatabaseConnection.getConnection("hikari");
+		databaseConnection = DatabaseConnection.getConnection();
 	}
 
 	@Test

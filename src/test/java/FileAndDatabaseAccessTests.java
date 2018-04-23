@@ -7,9 +7,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 class FileAndDatabaseAccessTests
 {
@@ -18,7 +16,7 @@ class FileAndDatabaseAccessTests
 	@Disabled("Only run this if access to the DB is failing")
 	void testHikariDatabaseAccessThroughJDBC()
 	{
-		var databaseConnection =  DatabaseConnection.getConnection("hikari");
+		var databaseConnection =  DatabaseConnection.getConnection();
 		assertNotNull(databaseConnection);
 	}
 
@@ -26,7 +24,7 @@ class FileAndDatabaseAccessTests
 	@Disabled("Only run this if access to the DB is failing")
 	void testPGDatabaseAccessThroughJDBC()
 	{
-		var databaseConnection =  DatabaseConnection.getConnection("postgres");
+		var databaseConnection =  DatabaseConnection.getConnection();
 		assertNotNull(databaseConnection);
 	}
 
@@ -35,7 +33,7 @@ class FileAndDatabaseAccessTests
 	void testThrowExceptionOnInvalidDataSourceArgument()
 	{
 		var datasourceName = "garbage";
-		Throwable exception = assertThrows(RuntimeException.class,() -> DatabaseConnection.getConnection(datasourceName));
+		Throwable exception = assertThrows(RuntimeException.class,() -> DatabaseConnection.getConnection());
 		assertEquals("Can't find datasource implementation for " + datasourceName,exception.getMessage(),"An exception should be thrown that terminates the program for an invalid datasource implementation");
 	}
 
@@ -43,7 +41,9 @@ class FileAndDatabaseAccessTests
 	@ValueSource(strings = { "Organization",
 							 "Service",
 							 "Program",
-							 "Location" })
+							 "Location",
+							 "Service_At_Location",
+							 "physical_address" })
 	void testForPresenceOfCsvFiles(String string)
 			throws IOException
 	{

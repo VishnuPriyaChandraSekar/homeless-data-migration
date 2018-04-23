@@ -10,7 +10,7 @@ public class MainClass
 	{
 		
 		ClearOutData.clearOutAllTables();
-		PopulateDatabase.updateAll("hikari");
+		PopulateDatabase.updateAll();
 		
 	}
 }

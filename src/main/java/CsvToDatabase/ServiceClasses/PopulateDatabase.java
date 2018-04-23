@@ -12,11 +12,10 @@ import org.postgresql.core.BaseConnection;
 public class PopulateDatabase
 {
 
-	private static String dataSource;
 
-	public static void updateAll(String dataSourceInput)
+
+	public static void updateAll()
 	{
-		dataSource = dataSourceInput;
 		updateOrganization();
 		updateProgram();
 		updateServices();
@@ -69,7 +68,7 @@ public class PopulateDatabase
 		var startTime = System.currentTimeMillis();
 		var sqlQuery = "COPY " + tableAndFilename.toLowerCase() + "  FROM stdin WITH CSV HEADER";
 		var linesCopied = 0L;
-		try (var connection = DatabaseConnection.getConnection(dataSource))
+		try (var connection = DatabaseConnection.getConnection())
 		{
 			var baseConnection = connection.unwrap(BaseConnection.class);
 			var copyManager = new CopyManager(baseConnection);

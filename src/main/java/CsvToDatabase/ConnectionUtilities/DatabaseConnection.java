@@ -14,7 +14,28 @@ import org.postgresql.ds.PGSimpleDataSource;
 public class DatabaseConnection
 {
 
-	public static Connection getConnection(String dataSourceToUse)
+	private static final String dataSourceToUse;
+
+	static
+	{
+		try
+		{
+			dataSourceToUse = Files.readAllLines(Paths.get("src/main/resources/Datasource.properties"))
+								   .stream()
+								   .filter(s -> s.startsWith("#dataSourceToUse"))
+								   .findFirst()
+								   .map(s -> s.replace("#dataSourceToUse=", ""))
+								   .get();
+		}
+		catch (IOException e)
+		{
+			e.printStackTrace();
+			throw new RuntimeException();
+
+		}
+	}
+
+	public static Connection getConnection()
 	{
 		switch (dataSourceToUse.toLowerCase())
 		{
