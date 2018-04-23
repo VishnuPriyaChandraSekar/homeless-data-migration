@@ -15,17 +15,14 @@ public class DatabaseConnection
 {
 
 	private static final String dataSourceToUse;
+	private static final Properties properties = new Properties();
 
 	static
 	{
 		try
 		{
-			dataSourceToUse = Files.readAllLines(Paths.get("src/main/resources/Datasource.properties"))
-								   .stream()
-								   .filter(s -> s.startsWith("#dataSourceToUse"))
-								   .findFirst()
-								   .map(s -> s.replace("#dataSourceToUse=", ""))
-								   .get();
+			properties.load(Files.newInputStream(Paths.get("src/main/resources/Datasource.properties")));
+			dataSourceToUse = properties.getProperty("dataSourceToUse");
 		}
 		catch (IOException e)
 		{
@@ -50,7 +47,8 @@ public class DatabaseConnection
 
 	private static Connection getHikariConnection()
 	{
-		HikariConfig config = new HikariConfig("src/main/resources/Datasource.properties");
+		properties.remove("dataSourceToUse");
+		HikariConfig config = new HikariConfig(properties);
 		config.setAutoCommit(true);
 		HikariDataSource ds = new HikariDataSource(config);
 		try
@@ -66,16 +64,7 @@ public class DatabaseConnection
 
 	private static Connection getPGConnection()
 	{
-		Properties properties = new Properties();
-		try
-		{
-			properties.load(Files.newInputStream(Paths.get("src/main/resources/Datasource.properties")));
-		}
-		catch (IOException e)
-		{
-			e.printStackTrace();
-			return null;
-		}
+
 		var dataSource = new PGSimpleDataSource();
 		dataSource.setServerName(properties.getProperty("dataSource.serverName"));
 		dataSource.setDatabaseName(properties.getProperty("dataSource.databaseName"));
