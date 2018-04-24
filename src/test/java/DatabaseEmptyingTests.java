@@ -77,7 +77,7 @@ class DatabaseEmptyingTests
 	void emptyDataFromPhysicalAddress()
 			throws SQLException
 	{
-		ClearOutData.clearOutServiceAtLocation();
+		ClearOutData.clearOutPhysicalAddress();
 		var resultSet = databaseConnection.createStatement()
 										  .executeQuery("SELECT id FROM physical_address");
 		assertFalse(resultSet.next(),"There should be no next row in the ResultSet.");
@@ -88,7 +88,7 @@ class DatabaseEmptyingTests
 	void emptyDataFromPhone()
 			throws SQLException
 	{
-		ClearOutData.clearOutServiceAtLocation();
+		ClearOutData.clearOutPhone();
 		var resultSet = databaseConnection.createStatement()
 										  .executeQuery("SELECT id FROM phone");
 		assertFalse(resultSet.next(),"There should be no next row in the ResultSet.");

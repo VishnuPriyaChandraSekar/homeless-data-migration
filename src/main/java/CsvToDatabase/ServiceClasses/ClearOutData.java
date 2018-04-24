@@ -49,6 +49,18 @@ public class ClearOutData
 		pgTruncateQuery(tableName);
 	}
 
+	public static void clearOutPhysicalAddress()
+	{
+		var tableName = "physical_address";
+		pgTruncateQuery(tableName);
+	}
+
+	public static void clearOutPhone()
+	{
+		var tableName = "phone";
+		pgTruncateQuery(tableName);
+	}
+
 	private static void pgTruncateQuery(String tableName)
 	{
 		long startTime = System.currentTimeMillis();
