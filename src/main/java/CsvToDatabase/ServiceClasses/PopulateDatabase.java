@@ -21,6 +21,7 @@ public class PopulateDatabase
 		updateServices();
 		updateLocation();
 		updateServiceAtLocation();
+		updatePhysicalAddress();
 	}
 
 	public static long updateOrganization()
@@ -58,6 +59,12 @@ public class PopulateDatabase
 	}
 
 	public static long updatePhysicalAddress()
+	{
+		var tableAndFilename = "physical_address";
+		return pgCopyQuery(tableAndFilename);
+	}
+
+	public static long updatePhone()
 	{
 		var tableAndFilename = "physical_address";
 		return pgCopyQuery(tableAndFilename);

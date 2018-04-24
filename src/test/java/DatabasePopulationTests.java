@@ -99,6 +99,19 @@ class DatabasePopulationTests
 		assertTrue(numberOfLinesCopied > 0, "More than one line should be copied");
 		assertEquals(numberOfLinesCopied, resultSet.getInt(1),"Copied data should be present in the database");
 	}
+
+	@Test
+	void testAbilityToPopulateDataToPhoneTable()
+			throws SQLException
+	{
+		long numberOfLinesCopied = PopulateDatabase.updatePhone();
+		var resultSet = databaseConnection.createStatement()
+										  .executeQuery("SELECT COUNT(id) FROM phone");
+		resultSet.next();
+		resultSet.getInt(1);
+		assertTrue(numberOfLinesCopied > 0, "More than one line should be copied");
+		assertEquals(numberOfLinesCopied, resultSet.getInt(1),"Copied data should be present in the database");
+	}
 	
 
 	@AfterAll
