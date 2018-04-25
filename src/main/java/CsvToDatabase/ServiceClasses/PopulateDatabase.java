@@ -66,7 +66,13 @@ public class PopulateDatabase
 
 	public static long updatePhone()
 	{
-		var tableAndFilename = "physical_address";
+		var tableAndFilename = "phone";
+		return pgCopyQuery(tableAndFilename);
+	}
+
+	public static long updateRegularSchedule()
+	{
+		var tableAndFilename = "regular_schedule";
 		return pgCopyQuery(tableAndFilename);
 	}
 

@@ -112,6 +112,19 @@ class DatabasePopulationTests
 		assertTrue(numberOfLinesCopied > 0, "More than one line should be copied");
 		assertEquals(numberOfLinesCopied, resultSet.getInt(1),"Copied data should be present in the database");
 	}
+
+	@Test
+	void testAbilityToPopulateRegularScheduleTable()
+			throws SQLException
+	{
+		long numberOfLinesCopied = PopulateDatabase.updateRegularSchedule();
+		var resultSet = databaseConnection.createStatement()
+										  .executeQuery("SELECT COUNT(id) FROM regular_schedule");
+		resultSet.next();
+		resultSet.getInt(1);
+		assertTrue(numberOfLinesCopied > 0, "More than one line should be copied");
+		assertEquals(numberOfLinesCopied, resultSet.getInt(1),"Copied data should be present in the database");
+	}
 	
 
 	@AfterAll
