@@ -17,6 +17,11 @@ public class ClearOutData
 		clearOutLocation();
 		clearOutService();
 		clearOutServiceAtLocation();
+		clearOutPhone();
+		clearOutPhysicalAddress();
+		clearOutRegularSchedule();
+		clearOutHolidaySchedule();
+		
 	}
 
 	public static void clearOutOrganization()
@@ -59,6 +64,20 @@ public class ClearOutData
 	{
 		var tableName = "phone";
 		pgTruncateQuery(tableName);
+	}
+
+	private static void clearOutRegularSchedule()
+	{
+		var tableAndFilename = "regular_schedule";
+		pgTruncateQuery(tableAndFilename);
+
+	}
+
+	private static void clearOutHolidaySchedule()
+	{
+		var tableAndFilename = "holiday_schedule";
+		pgTruncateQuery(tableAndFilename);
+
 	}
 
 	private static void pgTruncateQuery(String tableName)

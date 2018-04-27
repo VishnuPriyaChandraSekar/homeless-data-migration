@@ -22,6 +22,9 @@ public class PopulateDatabase
 		updateLocation();
 		updateServiceAtLocation();
 		updatePhysicalAddress();
+		updatePhone();
+		updateRegularSchedule();
+		updateHolidaySchedule();
 	}
 
 	public static long updateOrganization()
@@ -74,6 +77,13 @@ public class PopulateDatabase
 	{
 		var tableAndFilename = "regular_schedule";
 		return pgCopyQuery(tableAndFilename);
+	}
+
+	private static long updateHolidaySchedule()
+	{
+		var tableAndFilename = "holiday_schedule";
+		return pgCopyQuery(tableAndFilename);
+
 	}
 
 	private static long pgCopyQuery(String tableAndFilename)
