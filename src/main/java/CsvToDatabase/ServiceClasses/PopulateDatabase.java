@@ -25,6 +25,10 @@ public class PopulateDatabase
 		updatePhone();
 		updateRegularSchedule();
 		updateHolidaySchedule();
+		updateAccessibilityForDisabilities();
+		updateLgbtqFriendlyServices();
+		updateAgeEligibility();
+		updateGenderEligibility();
 	}
 
 	public static long updateOrganization()
@@ -83,9 +87,34 @@ public class PopulateDatabase
 	{
 		var tableAndFilename = "holiday_schedule";
 		return pgCopyQuery(tableAndFilename);
+	}
+
+	private static long updateAccessibilityForDisabilities()
+	{
+		var tableAndFilename = "accessibility_for_disabilities";
+		return pgCopyQuery(tableAndFilename);
+	}
+
+	private static long updateLgbtqFriendlyServices()
+	{
+		var tableAndFilename = "lgbtq_friendly_services";
+		return pgCopyQuery(tableAndFilename);
+	}
+	
+	private static long updateAgeEligibility()
+	{
+		var tableAndFilename = "age_eligibility";
+		return pgCopyQuery(tableAndFilename);
 
 	}
 
+	private static long updateGenderEligibility()
+	{
+		var tableAndFilename = "gender_eligibility";
+		return pgCopyQuery(tableAndFilename);
+
+	}
+	
 	private static long pgCopyQuery(String tableAndFilename)
 	{
 		var startTime = System.currentTimeMillis();

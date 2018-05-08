@@ -6,9 +6,7 @@ import CsvToDatabase.ConnectionUtilities.DatabaseConnection;
 
 public class ClearOutData
 {
-
-	private static String dataSourceToUse;
-
+	
 	public static void clearOutAllTables()
 	{
 
@@ -21,6 +19,10 @@ public class ClearOutData
 		clearOutPhysicalAddress();
 		clearOutRegularSchedule();
 		clearOutHolidaySchedule();
+		clearOutAccessibilityForDisabilities();
+		clearOutLgbtqFriendlyServices();
+		clearOutAgeEligibility();
+		clearOutGenderEligibility();
 		
 	}
 
@@ -76,6 +78,34 @@ public class ClearOutData
 	private static void clearOutHolidaySchedule()
 	{
 		var tableAndFilename = "holiday_schedule";
+		pgTruncateQuery(tableAndFilename);
+
+	}
+
+	private static void clearOutAccessibilityForDisabilities()
+	{
+		var tableAndFilename = "accessibility_for_disabilities";
+		pgTruncateQuery(tableAndFilename);
+
+	}
+
+	private static void clearOutLgbtqFriendlyServices()
+	{
+		var tableAndFilename = "lgbtq_friendly_services";
+		pgTruncateQuery(tableAndFilename);
+
+	}
+
+	private static void clearOutAgeEligibility()
+	{
+		var tableAndFilename = "age_eligibility";
+		pgTruncateQuery(tableAndFilename);
+
+	}
+
+	private static void clearOutGenderEligibility()
+	{
+		var tableAndFilename = "gender_eligibility";
 		pgTruncateQuery(tableAndFilename);
 
 	}
