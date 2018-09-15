@@ -1,13 +1,13 @@
 package CsvToDatabase.ServiceClasses;
 
+import CsvToDatabase.ConnectionUtilities.DatabaseConnection;
+import org.postgresql.copy.CopyManager;
+import org.postgresql.core.BaseConnection;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.sql.SQLException;
-
-import CsvToDatabase.ConnectionUtilities.DatabaseConnection;
-import org.postgresql.copy.CopyManager;
-import org.postgresql.core.BaseConnection;
 
 public class PopulateDatabase
 {
@@ -29,39 +29,44 @@ public class PopulateDatabase
 		updateLgbtqFriendlyServices();
 		updateAgeEligibility();
 		updateGenderEligibility();
+		updateContact();
+		updateLanguage();
+		updateProgramServiceTaxonomy();
+		updateServiceArea();
+		updateTaxonomy();
 	}
 
 	public static long updateOrganization()
 	{
 
-		var tableAndFilename = "Organization";
+		var tableAndFilename = "organization";
 		return pgCopyQuery(tableAndFilename);
 	}
 
 	public static long updateServices()
 	{
 
-		var tableAndFilename = "Service";
+		var tableAndFilename = "service";
 		return pgCopyQuery(tableAndFilename);
 	}
 
 	public static long updateProgram()
 	{
 
-		var tableAndFilename = "Program";
+		var tableAndFilename = "program";
 		return pgCopyQuery(tableAndFilename);
 	}
 
 
 	public static long updateLocation()
 	{
-		var tableAndFilename = "Location";
+		var tableAndFilename = "location";
 		return pgCopyQuery(tableAndFilename);
 	}
 
 	public static long updateServiceAtLocation()
 	{
-		var tableAndFilename = "Service_At_Location";
+		var tableAndFilename = "service_at_location";
 		return pgCopyQuery(tableAndFilename);
 	}
 
@@ -113,6 +118,36 @@ public class PopulateDatabase
 		var tableAndFilename = "gender_eligibility";
 		return pgCopyQuery(tableAndFilename);
 
+	}
+	
+	private static long updateContact()
+	{
+		var tableAndFilename = "contact";
+		return pgCopyQuery(tableAndFilename);
+	}
+
+	private static long updateLanguage()
+	{
+		var tableAndFilename = "language";
+		return pgCopyQuery(tableAndFilename);
+	}
+
+	private static long updateProgramServiceTaxonomy()
+	{
+		var tableAndFilename = "program_service_taxonomy";
+		return pgCopyQuery(tableAndFilename);
+	}
+
+	private static long updateServiceArea()
+	{
+		var tableAndFilename = "service_area";
+		return pgCopyQuery(tableAndFilename);
+	}
+
+	private static long updateTaxonomy()
+	{
+		var tableAndFilename = "taxonomy";
+		return pgCopyQuery(tableAndFilename);
 	}
 	
 	private static long pgCopyQuery(String tableAndFilename)
